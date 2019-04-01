@@ -7,8 +7,8 @@ to the car it found
 
 **It needs**
 
-..*bs4
+..* bs4
 
-..*requests
+.. *requests
 
-..*csv
+.. *csv
