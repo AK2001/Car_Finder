@@ -6,6 +6,6 @@ By giving a **maximum price** and **maximum kilometers** its writes a new csv fi
 to the car it found
 
 **It needs**
-1.bs4/n
-2.requests/n
-3.csv/n
+..*bs4
+..*requests
+..*csv
