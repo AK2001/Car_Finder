@@ -54,7 +54,7 @@ def Car_Finder(price_,kilometers_):
                     print("Sorry, something went wrong",e)                                                                #Try-Except because sometimes the values are missing from the site and it raises and error
                 if str(Kilometers).isdigit():
 
-                    if price <= price_ and Kilometers <= kilometers_:
+                    if price <= price_ and Kilometers <= kilometers_:                                                   #This is where the maximum price and kilometers are set
                         print('FOUND CAR')
                         final_cars += 1
                         needed_price = str(price)+'€'
