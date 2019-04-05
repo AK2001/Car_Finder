@@ -12,3 +12,5 @@ to the car it found
 * requests
 
 * csv
+
+**NOTE**:This program searches only the latest ads for cars and **not** every car on the page!
