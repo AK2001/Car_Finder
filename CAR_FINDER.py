@@ -50,12 +50,10 @@ def Car_Finder(price_,kilometers_):
                     price = int(INFO[2].find(class_='p_p').get_text().strip('€').strip().replace('.',''))               #Finds the Price of the car and set it an int for later use
                     Kilometers = int(Kilometers.strip("χλμ").strip().replace('.',''))                                   #Makes the value for the kilometers an int for later use
                     car_type = (INFO[3].find_all('td'))[1].get_text().replace('Αυτοκίνητο - ','')                       #Finds the Car Type
-                except Exception as e:
-                    print("Sorry, something went wrong",e)                                                                #Try-Except because sometimes the values are missing from the site and it raises and error
-                if str(Kilometers).isdigit():
 
-                    if price <= price_ and Kilometers <= kilometers_:                                                   #This is where the maximum price and kilometers are set
-                        print('FOUND CAR')
+
+                    if price <= price_ and Kilometers <= kilometers_:
+
                         final_cars += 1
                         needed_price = str(price)+'€'
                         needed_KHM= str(Kilometers)+' KHM'
@@ -63,15 +61,20 @@ def Car_Finder(price_,kilometers_):
                         needed_type = car_type
                         csv_writer.writerow([needed_price,needed_KHM,needed_type,needed_link])                          #Writes the values needed
 
+                except Exception:
+                    print("Sorry, something went wrong")                                                              #Try-Except because sometimes the values are missing from the site and it raises and error
+
     if final_cars == 0:
         print("Sorry, no Cars found, try again in a moment please")
+    else:
+        print(f'Found a total of {final_cars} cars')
 
-
-print('Please enter your maximum price and kilometers')
-try:
-    max_price = int(input('Price: '))
-    max_kilo = int(input("Kilometers: "))
-except ValueError:
-    print("Please enter a number and not a text and try again")
-else:
-    Car_Finder(max_price,max_kilo)
+if __name__ == '__main__' :
+    print('Please enter your maximum price and kilometers')
+    try:
+        max_price = int(input('Price: '))
+        max_kilo = int(input("Kilometers: "))
+    except ValueError:
+        print("Please enter a number and not a text and try again")
+    else:
+        Car_Finder(max_price,max_kilo)
