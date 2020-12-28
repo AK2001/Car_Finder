@@ -16,3 +16,5 @@ The purpose is to find cars that match your needs through this site.
 * csv
 
 **NOTE**:This program searches only the latest ads for cars and **not** every car on the page!
+
+**NOTE**:This script doesn't currently functions correctly.. It needs an update because the site has changed (update comming soon)
