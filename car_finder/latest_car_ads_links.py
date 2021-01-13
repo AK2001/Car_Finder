@@ -31,3 +31,4 @@ def car_links():
     driver.quit()  # Closes the browser
 
     return links  # Returns the links list containing the latest car ad links for the website
+
