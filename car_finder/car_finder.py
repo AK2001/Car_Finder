@@ -1,5 +1,6 @@
 """
-This program
+This program searches through a site called Car.gr and find the most recent ads of cars that exist,
+then writes some details of every car ad to a .csv file.
 """
 from car_info_collector import car_info_collector
 from latest_car_ads_links import car_links
