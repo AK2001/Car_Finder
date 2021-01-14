@@ -1,6 +1,7 @@
 from selenium import webdriver
 import time
 
+
 def car_links():
 
     PATH = "C:\Program Files (x86)\chromedriver.exe"  # Location of the chromedriver on the system
@@ -15,20 +16,28 @@ def car_links():
                                         # disable it.
     links = []
 
-    time.sleep(2)  # Waits x seconds to ensure that the correct category (Αυτοκίνητα = cars) is active and the car ads are
-                   # shown. If we want to wait longer to see more ads just increase the x value (ideal 5 mins for approx. 20 car ads)
+    time.sleep(3)  # Waits x seconds to ensure that the correct category (Αυτοκίνητα = cars) is active and the car ads are
+                   # shown (minimum = 2-3 seconds ~ 7 cars). If we want to wait longer to see more ads just increase the x value
+                   # (ideal 5 mins for approx. 20 car ads)
 
     ads = driver.find_elements_by_class_name("f-wrapper.entry")  # Finds all the ads from the site
 
     for i in range(len(ads)):  # Gets the href attribute and stores it in a list named "Links"
         links.append(ads[i].get_attribute("href"))
 
-
     #print(len(links)) # We can check if the number of car links that were saved are actually the same as the number of car ads
 
-    #time.sleep(1)  # Waits x second (Useful if we want to double check the length of links and the content on the page
+    time.sleep(2)  # Waits x second (Useful if we want to double check the length of links and the content on the page
 
     driver.quit()  # Closes the browser
 
     return links  # Returns the links list containing the latest car ad links for the website
 
+
+if __name__ == '__main__':
+    try:
+        print(car_links())  # Prints the list of links the method has found
+    except Exception as e:
+        print("Something went wrong\n"
+              "<-!-> Possible the website's code has changed since last code update.\n"
+              "Exception: ", e)

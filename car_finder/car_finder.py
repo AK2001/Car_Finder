@@ -1,82 +1,55 @@
-'''
-UNDER CONSTRUCTION.........
-'''
-
-import requests
-from bs4 import BeautifulSoup
+"""
+This program
+"""
+from car_info_collector import car_info_collector
+from latest_car_ads_links import car_links
 from csv import writer
 
 
-def car_finder(price_, kilometers_):
-    response = requests.get('https://www.car.gr/latest/')  # Takes request from URL
+def car_finder(cars_dict):
+    with open('CarFinder.csv', 'w') as csv_file:  # We open a csv file in order to save the values we want:
+        csv_writer = writer(csv_file)
 
-    soup = BeautifulSoup(response.text, 'html.parser')  # Parses the HTML
+        headers = ['Brand-model', 'Price', 'Kilometers', 'Car_category', 'Link']  # We set the headers we want in our .csv file
 
-    posts = soup.select(".classified")  # Finds the classes which we will take the link to the car
-
-    final_cars = 0
-
-    with open('CarFinder.csv', 'w') as csv_file:  # We open a csv file in order to save the values:
-        csv_writer = writer(csv_file)  # 'Price','Kilometers','Car Type' and 'Link' as text
-        headers = ['Price', 'Kilometers', 'Car Type', 'Link']  # Headers are made only for looks
         csv_writer.writerow(headers)  # It's best to open the new csv file in Excel
 
-        print('Wait a moment...')
-        for post in posts:
+        for car in cars_dict:                           # We want to search each car's details separately
+            car_details = cars_dict.get(car)            # Remember cars_dict is a nested dictionary where keys are car1, car2...
+            csv_writer.writerow(                        # and values are dictionaries of each car's details (keys shown to the left)
+                [car_details.get('Brand-model'),        # Writes each of car's details to the .csv file
+                 car_details.get('Price'),
+                 car_details.get('Kilometers'),
+                 car_details.get('Car_category'),
+                 car_details.get('Link')])
 
-            link = post.find('a')['href']  # Finds the link to the car
-            if "/parts" in link:
-                continue
-
-            correct_link = 'https://www.car.gr' + link  # Note:The link we found was incomplete(missing https://...)
-
-            new_response = requests.get(correct_link)
-            new_soup = BeautifulSoup(new_response.text, 'html.parser')  # Second request to the new completed link
-
-            item = str(new_soup.find(id='breadcrumb'))
-
-            if 'Αυτοκίνητα' not in item:  # Makes sure we only get links for cars and not boats,motorcycles etc.
-                pass
-            else:
-
-                INFO = new_soup.find_all('tr')
-                try:
-                    KM_List = INFO[5].find_all('td')
-                    Kilometers = KM_List[1].get_text()  # Finds the Kilometers of the car
-                    price = int(INFO[2].find(class_='p_p').get_text().strip('€').strip().replace('.',
-                                                                                                 ''))  # Finds the
-                    # Price of the car and set it an int for later use
-                    Kilometers = int(Kilometers.strip("χλμ").strip().replace('.',
-                                                                             ''))  # Makes the value for the
-                    # kilometers an int for later use
-                    car_type = (INFO[3].find_all('td'))[1].get_text().replace('Αυτοκίνητο - ', '')  # Finds the Car Type
-
-                    if price <= price_ and Kilometers <= kilometers_:
-                        final_cars += 1
-                        needed_price = str(price) + '€'
-                        needed_KHM = str(Kilometers) + ' KHM'
-                        needed_link = correct_link  # Sets new name from the already found values for easier use
-                        needed_type = car_type
-                        csv_writer.writerow(
-                            [needed_price, needed_KHM, needed_type, needed_link])  # Writes the values needed
-
-                except Exception:
-                    print(
-                        "Sorry, something went wrong")  # Try-Except because sometimes the values are missing from
-                    # the site and it raises and error
-
-    if final_cars == 0:
-        print("Sorry, no Cars found, try again in a moment please")
-    else:
-        print(f'Found a total of {final_cars} cars')
+    print("Successfully created .csv file <CarFinder.csv> with every car ad alongside some of it's details.")
 
 
-if __name__ == '__main__':
-    print('Please enter your maximum price and kilometers')
+if __name__ == '__main__':  # This part of code executes only when this file is run solo, try-except to catch any code problems
+    links = []
+    car_dict = {}
     try:
-        max_price = int(input('Price: '))
-        max_kilo = int(input("Kilometers: "))
-    except ValueError:
-        print("Please enter a number and not a text and try again")
+        links = car_links()
+    except Exception as e:
+        print("Something went wrong with car_links() function in latest_car_ads_links.py\n"
+              "Possible the website <https://www.car.gr/latest/> has changed since last code update\n"
+              "Exception: ", e)
     else:
-        car_finder(max_price, max_kilo)
+        try:
+            if (len(car_info_collector(links)) != (len(links))):
+                print("car_info_collector() didn't work correctly.\n"
+                      "<-!-> Possible syntax error went unnoticed.\n"
+                      "While there are ad links found the function didn't manage to work on them.\n"
+                      "<-!-> Possible the website of each car ad has changed since last code update.")
+            else:
+                car_dict = car_info_collector(links)
+        except Exception as e:
+            print("Something went wrong with car_info_collector() function in car_info_collector.py\n"
+                  "Exception: ", e)
+        else:
+            try:
+                car_finder(car_dict)
+            except Exception as e:
+                print("Something went wrong with car_finder() function in car_finder.py\n"
+                      "Exception: ", e)
