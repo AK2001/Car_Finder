@@ -1,20 +1,19 @@
 # Car_Finder
 
-## This is a project where the program requests from a site called [Car.gr](https://www.car.gr/latest/)
+## This is a project where the program find the most recent car ads from a site called [Car.gr](https://www.car.gr/latest/)
 
-By giving a **maximum price** and **maximum kilometers** its writes a new csv file including the price kilometers and the link
-to the cars it found
+It manages it by using `seleniun` library to uncheck the other categories in the latest ads (by default all the other categories are active e.g. motorcycles or hobbies)
 
-The purpose is to find cars that match your needs through this site.
+The purpose is to have easy access to the latest car ads alongside to some to its details (like 'Brand-model', 'Price', 'Kilometers', 'Car_category' and 'Link').
+Each car ad's details are written to a .csv file in the end.
 
-**It needs**
+**Libraries used**
 
-* bs4
-
-* requests
-
-* csv
+* `selenium`
+* `time`
+* `requests`
+* `bs4`
+* `csv`
 
 **NOTE**:This program searches only the latest ads for cars and **not** every car on the page!
 
-**NOTE**:This script doesn't currently functions correctly.. It needs an update because the site has changed (update comming soon)
