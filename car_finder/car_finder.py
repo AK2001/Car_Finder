@@ -8,7 +8,7 @@ from csv import writer
 
 
 def car_finder(cars_dict):
-    with open('CarFinder.csv', 'w') as csv_file:  # We open a csv file in order to save the values we want:
+    with open('CarFinder.csv', 'w') as csv_file:  # We open a csv file in order to save the values we want: 
         csv_writer = writer(csv_file)
 
         headers = ['Brand-model', 'Price', 'Kilometers', 'Car_category', 'Link']  # We set the headers we want in our .csv file
