@@ -1,6 +1,9 @@
 """
 This program searches through a site called Car.gr and find the most recent ads of cars that exist,
 then writes some details of every car ad to a .csv file.
+
+NOTE: After successfully creating the .csv file. Before running the program again it is advised to
+close the .csv or <Exception: [Errno 13] Permission denied: 'CarFinder.csv'> will appear as output
 """
 from car_info_collector import car_info_collector
 from latest_car_ads_links import car_links
@@ -53,4 +56,4 @@ if __name__ == '__main__':  # This part of code executes only when this file is 
                 car_finder(car_dict)
             except Exception as e:
                 print("Something went wrong with car_finder() function in car_finder.py\n"
-                      "Exception: ", e)
+                      "Exception:", e)

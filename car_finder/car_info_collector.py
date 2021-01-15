@@ -1,3 +1,7 @@
+"""
+The purpose of this function is to return a nested dictionary with car1,car2... as keys
+and a dictionary of some details of each car as values
+"""
 import requests
 from latest_car_ads_links import car_links
 from bs4 import BeautifulSoup

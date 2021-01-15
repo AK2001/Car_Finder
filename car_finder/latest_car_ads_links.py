@@ -1,3 +1,8 @@
+"""
+The purpose of this function is to make only the cars category in the site active and then scrape
+every link of each ad found at that specific time (Remember: only the latest car ads are shown).
+Finally, it returns a list of each link found.
+"""
 from selenium import webdriver
 import time
 
@@ -18,7 +23,9 @@ def car_links():
 
     time.sleep(3)  # Waits x seconds to ensure that the correct category (Αυτοκίνητα = cars) is active and the car ads are
                    # shown (minimum = 2-3 seconds ~ 7 cars). If we want to wait longer to see more ads just increase the x value
-                   # (ideal 5 mins for approx. 20 car ads)
+                   # (ideal 5 mins for approx. 20 car ads depends on the time of execution)
+                   # NOTE: Fix seconds to the time the site responds to the dis-activation of each category except cars in
+                   # order to show only car ads.
 
     ads = driver.find_elements_by_class_name("f-wrapper.entry")  # Finds all the ads from the site
 
@@ -27,7 +34,7 @@ def car_links():
 
     #print(len(links)) # We can check if the number of car links that were saved are actually the same as the number of car ads
 
-    time.sleep(2)  # Waits x second (Useful if we want to double check the length of links and the content on the page
+    #time.sleep(10)  # Waits x second (Useful if we want to double check the length of links and the content on the page
 
     driver.quit()  # Closes the browser
 
