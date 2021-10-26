@@ -9,7 +9,7 @@ import time
 
 def car_links():
 
-    PATH = "C:\Program Files (x86)\chromedriver.exe"  # Location of the chromedriver on the system
+    PATH = ".\chromedriver.exe"  # Location of the chromedriver on the system
     driver = webdriver.Chrome(PATH)  # Creating webdriver
 
     driver.get("https://www.car.gr/latest/")  # Accessing the website
